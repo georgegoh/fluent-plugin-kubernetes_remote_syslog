@@ -19,6 +19,7 @@ class RemoteSyslogOutputTest < MiniTest::Unit::TestCase
       port 5566
       severity debug
       tag minitest
+      tls true
     ]
 
     d.run do
@@ -39,6 +40,7 @@ class RemoteSyslogOutputTest < MiniTest::Unit::TestCase
     assert_equal 1, p.facility
     assert_equal "minitest", p.tag
     assert_equal 7, p.severity
+    assert_equal true, p.tls
   end
 
   def test_rewrite_tag
