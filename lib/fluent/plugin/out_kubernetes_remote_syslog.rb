@@ -16,7 +16,7 @@ module Fluent
     config_param :host,     :string
     config_param :port,     :integer, :default => 514
     config_param :protocol, :string,  :default => 'udp'
-    config_param :tls,      :boolean, :default => false
+    config_param :tls,      :string,  :default => 'false'
     config_param :ca_file,  :string,  :default => ''
 
     config_param :facility,     :string,  :default => "user"
@@ -48,7 +48,7 @@ module Fluent
         if @protocol.downcase == 'tcp'
           @loggers[tag] ||= RemoteSyslogSender::TcpSender.new(@host,
             @port,
-            tls: @tls,
+            tls: (@tls.to_s.downcase == 'true' ? true : false),
             ca_file: @ca_file,
             facility: @facility,
             severity: @severity,
